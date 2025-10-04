@@ -1,0 +1,77 @@
+server:
+  port: 8080
+
+spring:
+  application:
+    name: api-gateway
+
+  cloud:
+    gateway:
+      discovery:
+        locator:
+          enabled: true
+      routes:
+        - id: authentication-service
+          uri: lb://authentication-service
+          predicates:
+            - Path=/auth/**
+        - id: reservation-service
+          uri: lb://reservation-service
+          predicates:
+            - Path=/api/reservations/**
+        - id: guest-service
+          uri: lb://guest-service
+          predicates:
+            - Path=/api/guests/**
+        - id: room-service
+          uri: lb://room-service
+          predicates:
+            - Path=/api/rooms/**
+        - id: payment-service
+          uri: lb://payment-service
+          predicates:
+            - Path=/api/payments/**
+        - id: bill-service
+          uri: lb://bill-service
+          predicates:
+            - Path=/api/bills/**
+        - id: staff-service
+          uri: lb://staff-service
+          predicates:
+            - Path=/api/staff/**
+        - id: department-service
+          uri: lb://staff-service
+          predicates:
+            - Path=/api/departments/**
+        - id: report-service
+          uri: lb://report-service
+          predicates:
+            - Path=/api/reports/**
+        - id: rate-service
+          uri: lb://rate-service
+          predicates:
+            - Path=/api/rates/**
+      globalcors:
+        corsConfigurations:
+          '[/**]':
+            allowedOrigins: "http://localhost:3000"   # Your React app's URL
+            allowedMethods:
+              - GET
+              - POST
+              - PUT
+              - DELETE
+              - OPTIONS
+            allowedHeaders: "*"
+            allowCredentials: true
+jwt:
+  secret: "qX1CMq3WpgSmg/WcqZIjL3skw2WYhNAdXCfYCfu685E="
+
+eureka:
+  client:
+    service-url:
+      defaultZone: http://localhost:8761/eureka
+
+
+
+
+
